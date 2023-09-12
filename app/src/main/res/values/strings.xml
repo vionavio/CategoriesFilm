@@ -2,4 +2,8 @@
     <string name="app_name">CategoriesFilm</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="text_popular">Popular</string>
+    <string name="show_all">Show All</string>
+    <string name="text_in_theaters">In Theaters</string>
+    <string name="text_upcoming">Upcoming</string>
 </resources>
