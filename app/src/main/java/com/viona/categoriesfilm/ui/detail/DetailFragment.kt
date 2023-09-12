@@ -5,12 +5,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.viona.categoriesfilm.R
 import com.viona.categoriesfilm.databinding.FragmentDetailBinding
 
 class DetailFragment : Fragment() {
 
-    private var _binding : FragmentDetailBinding? = null
+    private var _binding: FragmentDetailBinding? = null
     private val binding get() = _binding!!
 
 

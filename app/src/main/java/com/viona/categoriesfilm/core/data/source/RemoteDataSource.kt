@@ -4,6 +4,7 @@ import android.util.Log
 import com.viona.categoriesfilm.core.data.source.network.ApiResponse
 import com.viona.categoriesfilm.core.data.source.network.ApiService
 import com.viona.categoriesfilm.core.data.source.response.MovieResponseData
+import com.viona.categoriesfilm.core.domain.model.type.MovieType
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -30,6 +31,7 @@ class RemoteDataSource @Inject constructor(private val apiService: ApiService) {
             }
         }.flowOn(Dispatchers.IO)
     }
+
     suspend fun getUpcomingMovie(): Flow<ApiResponse<List<MovieResponseData>>> {
         return flow {
             try {
@@ -45,6 +47,7 @@ class RemoteDataSource @Inject constructor(private val apiService: ApiService) {
             }
         }.flowOn(Dispatchers.IO)
     }
+
     suspend fun getTheatreMovie(): Flow<ApiResponse<List<MovieResponseData>>> {
         return flow {
             try {
@@ -59,5 +62,25 @@ class RemoteDataSource @Inject constructor(private val apiService: ApiService) {
                 emit(ApiResponse.Error(e.toString()))
             }
         }.flowOn(Dispatchers.IO)
+    }
+
+    suspend fun getMoviePaging(
+        type: MovieType,
+        page: Int
+    ): ApiResponse<List<MovieResponseData>> {
+        try {
+            val response = when (type) {
+                MovieType.POPULAR -> apiService.getPopularMovie(page)
+                MovieType.UPCOMING -> apiService.getUpcomingMovie(page)
+                MovieType.THEATRE -> apiService.getTheatreMovie(page)
+            }
+            val data = response.results
+            if (data != null) {
+                return ApiResponse.Success(data)
+            }
+            return ApiResponse.Error("Failed to fetch popular movies")
+        } catch (e: Exception) {
+            return ApiResponse.Error("An error occurred: ${e.message}")
+        }
     }
 }

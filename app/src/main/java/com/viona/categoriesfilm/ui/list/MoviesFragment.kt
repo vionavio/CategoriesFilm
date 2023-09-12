@@ -1,18 +1,39 @@
 package com.viona.categoriesfilm.ui.list
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.findNavController
-import com.viona.categoriesfilm.R
+import android.widget.Toast
+import androidx.fragment.app.viewModels
+import com.viona.categoriesfilm.MyApplication
+import com.viona.categoriesfilm.core.domain.model.type.MovieType
 import com.viona.categoriesfilm.databinding.FragmentMoviesBinding
+import com.viona.categoriesfilm.ui.list.adapter.MovieListAdapter
+import com.viona.categoriesfilm.util.Constants
+import com.viona.categoriesfilm.util.ViewModelFactory
+import com.viona.categoriesfilm.util.observableData
+import javax.inject.Inject
 
 
 class MoviesFragment : Fragment() {
     private var _binding: FragmentMoviesBinding? = null
     private val binding get() = _binding!!
+
+    private val type by lazy { arguments?.getString(Constants.EXTRA_TYPE).orEmpty() }
+    @Inject
+    lateinit var factory: ViewModelFactory
+
+    private val viewModel: MoviesViewModel by viewModels { factory }
+
+    private lateinit var movieAdapter: MovieListAdapter
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        (requireActivity().application as MyApplication).appComponent.inject(this)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -24,13 +45,26 @@ class MoviesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.btnSubmit.setOnClickListener {
-            it.findNavController().navigate(R.id.action_moviesFragment_to_detailFragment)
-        }
+        Toast.makeText(context, type, Toast.LENGTH_SHORT).show()
+        initData()
+        initView()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
+
+    private fun initView(){
+        movieAdapter = MovieListAdapter()
+        binding.moviesRecyclerView.adapter = movieAdapter
+
+    }
+    private fun initData() {
+        val typeMovie = MovieType.getTypeByString(type)
+        viewModel.getMoviePaging(typeMovie).observableData(viewLifecycleOwner) { pagingData ->
+            movieAdapter.submitData(viewLifecycleOwner.lifecycle, pagingData)
+        }
+    }
+
 }

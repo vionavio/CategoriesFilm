@@ -7,10 +7,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.viona.categoriesfilm.MyApplication
+import com.viona.categoriesfilm.R
+import com.viona.categoriesfilm.core.domain.model.type.MovieType
 import com.viona.categoriesfilm.databinding.FragmentHomeBinding
 import com.viona.categoriesfilm.ui.home.adapter.MovieAdapter
+import com.viona.categoriesfilm.util.Constants.EXTRA_TYPE
 import com.viona.categoriesfilm.util.ViewModelFactory
 import com.viona.categoriesfilm.util.observableData
 import javax.inject.Inject
@@ -42,7 +46,6 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initData()
         initView()
-
     }
 
     override fun onDestroyView() {
@@ -54,9 +57,7 @@ class HomeFragment : Fragment() {
         viewModel.getPopularMovie()
         viewModel.getUpcomingMovie()
         viewModel.getTheatreMovie()
-    }
 
-    private fun initView() {
         val popularMovieAdapter = MovieAdapter()
         val upcomingMovieAdapter = MovieAdapter()
         val theatreMovieAdapter = MovieAdapter()
@@ -81,5 +82,20 @@ class HomeFragment : Fragment() {
         viewModel.theatreMovie.observableData(this) { result ->
             theatreMovieAdapter.submitData(result)
         }
+    }
+
+    private fun initView() = with(binding) {
+
+        tvShowPopular.setOnClickListener { goToMovie(it, MovieType.POPULAR.name) }
+        tvShowAllTheatre.setOnClickListener { goToMovie(it, MovieType.THEATRE.name) }
+        tvShowAllUpcoming.setOnClickListener { goToMovie(it, MovieType.UPCOMING.name) }
+
+    }
+
+    private fun goToMovie(view: View, type: String) {
+        val bundle = Bundle().apply {
+            putString(EXTRA_TYPE, type)
+        }
+        view.findNavController().navigate(R.id.action_homeFragment_to_moviesFragment, bundle)
     }
 }

@@ -22,6 +22,7 @@ testRunner = "1.5.2"
 dagger = "2.48"
 kotlinCoroutines = "1.7.3"
 glide = "4.15.1"
+paging = "3.2.1"
 
 [libraries]
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
@@ -48,6 +49,7 @@ kotlinCoroutines = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines
 kotlinCoroutinesAndroid = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "kotlinCoroutines" }
 kotlinCoroutinesTest = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "kotlinCoroutines" }
 glide = { group = "com.github.bumptech.glide", name = "glide", version.ref = "glide" }
+paging = { group = "androidx.paging", name = "paging-runtime", version.ref = "paging" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
