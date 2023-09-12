@@ -26,4 +26,26 @@ class MovieRepositoryImpl @Inject constructor(
             }
         }.asFlow()
 
+    override fun getUpcomingMovie(): Flow<Resource<List<Movie>>> =
+        object : NetworkBoundResponse<List<Movie>, List<MovieResponseData>>() {
+            override suspend fun mapApiResponseToResult(responseData: List<MovieResponseData>): List<Movie> {
+                return DataMapper.mapResponseToDomain(responseData)
+            }
+
+            override suspend fun createCall(): Flow<ApiResponse<List<MovieResponseData>>> {
+                return remoteDataSource.getUpcomingMovie()
+            }
+        }.asFlow()
+
+    override fun getTheatreMovie(): Flow<Resource<List<Movie>>> =
+        object : NetworkBoundResponse<List<Movie>, List<MovieResponseData>>() {
+            override suspend fun mapApiResponseToResult(responseData: List<MovieResponseData>): List<Movie> {
+                return DataMapper.mapResponseToDomain(responseData)
+            }
+
+            override suspend fun createCall(): Flow<ApiResponse<List<MovieResponseData>>> {
+                return remoteDataSource.getTheatreMovie()
+            }
+        }.asFlow()
+
 }

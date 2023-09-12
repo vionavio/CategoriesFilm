@@ -30,4 +30,34 @@ class RemoteDataSource @Inject constructor(private val apiService: ApiService) {
             }
         }.flowOn(Dispatchers.IO)
     }
+    suspend fun getUpcomingMovie(): Flow<ApiResponse<List<MovieResponseData>>> {
+        return flow {
+            try {
+                val response = apiService.getUpcomingMovie(1)
+                val dataList = response.results.orEmpty()
+                if (dataList.isNotEmpty()) {
+                    emit(ApiResponse.Success(dataList))
+                } else {
+                    emit(ApiResponse.Empty)
+                }
+            } catch (e: Exception) {
+                emit(ApiResponse.Error(e.toString()))
+            }
+        }.flowOn(Dispatchers.IO)
+    }
+    suspend fun getTheatreMovie(): Flow<ApiResponse<List<MovieResponseData>>> {
+        return flow {
+            try {
+                val response = apiService.getTheatreMovie(1)
+                val dataList = response.results.orEmpty()
+                if (dataList.isNotEmpty()) {
+                    emit(ApiResponse.Success(dataList))
+                } else {
+                    emit(ApiResponse.Empty)
+                }
+            } catch (e: Exception) {
+                emit(ApiResponse.Error(e.toString()))
+            }
+        }.flowOn(Dispatchers.IO)
+    }
 }

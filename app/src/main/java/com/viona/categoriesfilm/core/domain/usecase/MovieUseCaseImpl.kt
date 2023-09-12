@@ -13,4 +13,12 @@ class MovieUseCaseImpl @Inject constructor(
         return movieRepository.getPopularMovie()
     }
 
+    override fun getUpcomingMovie(): Flow<Resource<List<Movie>>> {
+        return movieRepository.getUpcomingMovie()
+    }
+
+    override fun getTheatreMovie(): Flow<Resource<List<Movie>>> {
+        return movieRepository.getTheatreMovie()
+    }
+
 }

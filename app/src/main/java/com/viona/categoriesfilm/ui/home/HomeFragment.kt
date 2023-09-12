@@ -7,11 +7,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.navigation.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.viona.categoriesfilm.MyApplication
-import com.viona.categoriesfilm.R
 import com.viona.categoriesfilm.databinding.FragmentHomeBinding
+import com.viona.categoriesfilm.ui.home.adapter.MovieAdapter
 import com.viona.categoriesfilm.util.ViewModelFactory
+import com.viona.categoriesfilm.util.observableData
 import javax.inject.Inject
 
 
@@ -29,9 +30,9 @@ class HomeFragment : Fragment() {
         super.onAttach(context)
         (requireActivity().application as MyApplication).appComponent.inject(this)
     }
+
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         return binding.root
@@ -39,12 +40,46 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.getPopularMovie()
+        initData()
+        initView()
 
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun initData() {
+        viewModel.getPopularMovie()
+        viewModel.getUpcomingMovie()
+        viewModel.getTheatreMovie()
+    }
+
+    private fun initView() {
+        val popularMovieAdapter = MovieAdapter()
+        val upcomingMovieAdapter = MovieAdapter()
+        val theatreMovieAdapter = MovieAdapter()
+        binding.rvPopular.apply {
+            layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+            adapter = popularMovieAdapter
+        }
+        binding.rvUpcoming.apply {
+            layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+            adapter = upcomingMovieAdapter
+        }
+        binding.rvTheatre.apply {
+            layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+            adapter = theatreMovieAdapter
+        }
+        viewModel.popularMovie.observableData(this) { result ->
+            popularMovieAdapter.submitData(result)
+        }
+        viewModel.upcomingMovie.observableData(this) { result ->
+            upcomingMovieAdapter.submitData(result)
+        }
+        viewModel.theatreMovie.observableData(this) { result ->
+            theatreMovieAdapter.submitData(result)
+        }
     }
 }

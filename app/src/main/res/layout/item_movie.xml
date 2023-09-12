@@ -10,7 +10,7 @@
     android:focusable="true">
 
     <ImageView
-        android:id="@+id/image"
+        android:id="@+id/iv_movie"
         android:layout_width="108dp"
         android:layout_height="162dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -27,8 +27,8 @@
         android:lines="2"
         android:paddingTop="5dp"
         android:textSize="12sp"
-        app:layout_constraintStart_toStartOf="@id/image"
-        app:layout_constraintEnd_toEndOf="@id/image"
-        app:layout_constraintTop_toBottomOf="@id/image"
+        app:layout_constraintStart_toStartOf="@id/iv_movie"
+        app:layout_constraintEnd_toEndOf="@id/iv_movie"
+        app:layout_constraintTop_toBottomOf="@id/iv_movie"
         tools:text="Title" />
 </androidx.constraintlayout.widget.ConstraintLayout>

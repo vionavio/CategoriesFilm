@@ -66,6 +66,7 @@ dependencies {
     implementation(libs.lifecycleLiveData)
     implementation(libs.dagger)
     implementation(libs.kotlinCoroutines)
+    implementation(libs.glide)
     kapt(libs.daggerCompiler)
     testImplementation(libs.junit)
     testImplementation(libs.archCoreTest)
