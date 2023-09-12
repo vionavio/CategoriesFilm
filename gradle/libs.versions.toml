@@ -12,6 +12,15 @@ retrofitConverter = "2.9.0"
 gson = "2.10.1"
 logging = "4.11.0"
 constraintlayout = "2.1.4"
+navigationFragmentKtx = "2.7.2"
+navigationUiKtx = "2.7.2"
+secretsGradlePlugin = "2.0.1"
+lifecycle = "2.6.2"
+archTest = "2.2.0"
+testRules = "1.5.0"
+testRunner = "1.5.2"
+dagger = "2.48"
+kotlinCoroutines = "1.7.3"
 
 [libraries]
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
@@ -25,9 +34,24 @@ retrofitConverter = { group = "com.squareup.retrofit2", name = "converter-gson",
 logging = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "logging" }
 gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
 constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
+androidx-navigation-fragment-ktx = { group = "androidx.navigation", name = "navigation-fragment-ktx", version.ref = "navigationFragmentKtx" }
+androidx-navigation-ui-ktx = { group = "androidx.navigation", name = "navigation-ui-ktx", version.ref = "navigationUiKtx" }
+lifecycle = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycle" }
+lifecycleLiveData = { group = "androidx.lifecycle", name = "lifecycle-livedata-ktx", version.ref = "lifecycle" }
+archCoreTest = { group = "androidx.arch.core", name = "core-testing", version.ref = "archTest"}
+testRules = { group = "androidx.test", name = "rules", version.ref = "testRules"}
+testRunner = { group = "androidx.test", name = "runner", version.ref = "testRunner"}
+dagger = { group = "com.google.dagger", name = "dagger", version.ref = "dagger" }
+daggerCompiler = { group = "com.google.dagger", name = "dagger-compiler", version.ref = "dagger" }
+kotlinCoroutines = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "kotlinCoroutines" }
+kotlinCoroutinesAndroid = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "kotlinCoroutines" }
+kotlinCoroutinesTest = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "kotlinCoroutines" }
 
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+secretsGradlePlugin = { id = "com.google.android.libraries.mapsplatform.secrets-gradle-plugin", version.ref = "secretsGradlePlugin" }
+kotlinParcelable = { id = "org.jetbrains.kotlin.plugin.parcelize", version = "1.9.10" }
+androidLibrary = { id = "com.android.library", version.ref = "agp" }
 
