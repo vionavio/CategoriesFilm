@@ -4,6 +4,7 @@ import androidx.paging.PagingData
 import androidx.paging.map
 import com.viona.categoriesfilm.core.data.Resource
 import com.viona.categoriesfilm.core.domain.model.Movie
+import com.viona.categoriesfilm.core.domain.model.ReviewItem
 import com.viona.categoriesfilm.core.domain.model.VideoStream
 import com.viona.categoriesfilm.core.domain.model.type.MovieType
 import com.viona.categoriesfilm.core.domain.repository.MovieRepository
@@ -41,6 +42,10 @@ class MovieUseCaseImpl @Inject constructor(
 
     override fun getVideoMovie(id: Long): Flow<Resource<List<VideoStream>>> {
         return movieRepository.getVideoMovie(id)
+    }
+
+    override fun getReviewMovie(id: Int): Flow<Resource<List<ReviewItem>>> {
+        return movieRepository.getReviewMovie(id)
     }
 
 }

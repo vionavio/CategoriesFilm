@@ -4,6 +4,7 @@ import android.util.Log
 import com.viona.categoriesfilm.core.data.source.network.ApiResponse
 import com.viona.categoriesfilm.core.data.source.network.ApiService
 import com.viona.categoriesfilm.core.data.source.response.MovieResponseData
+import com.viona.categoriesfilm.core.data.source.response.ReviewResponse
 import com.viona.categoriesfilm.core.data.source.response.VideoStreamsResponse
 import com.viona.categoriesfilm.core.data.source.response.VideoStreamsResponseItem
 import com.viona.categoriesfilm.core.domain.model.type.MovieType
@@ -101,6 +102,17 @@ class RemoteDataSource @Inject constructor(private val apiService: ApiService) {
         return flow {
             try {
                 val response = apiService.getVideoStreams(id)
+                emit(ApiResponse.Success(response))
+            } catch (e: Exception) {
+                emit(ApiResponse.Error(e.toString()))
+            }
+        }.flowOn(Dispatchers.IO)
+    }
+
+    suspend fun getReviewMovie(id: Int): Flow<ApiResponse<ReviewResponse>> {
+        return flow {
+            try {
+                val response = apiService.getReviewMovie(id)
                 emit(ApiResponse.Success(response))
             } catch (e: Exception) {
                 emit(ApiResponse.Error(e.toString()))

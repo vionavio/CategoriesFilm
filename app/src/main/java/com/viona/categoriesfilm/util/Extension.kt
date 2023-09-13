@@ -32,6 +32,16 @@ fun ImageView.loadWithGlide(url: String) {
         .into(this)
 }
 
+fun ImageView.loadWithGlideCircle(url: String) {
+    Glide.with(this)
+        .load(url)
+        .circleCrop()
+        .placeholder(R.drawable.ic_loading_circle)
+        .error(R.drawable.ic_person)
+        .apply(RequestOptions.downsampleOf(DownsampleStrategy.AT_MOST))
+        .into(this)
+}
+
 fun TextView.movieEpisode(runtimeInMinutes: Int?) {
     runtimeInMinutes?.let {
         val hoursText: String = appendZeroBeforeNumber((it / 60f).toInt())

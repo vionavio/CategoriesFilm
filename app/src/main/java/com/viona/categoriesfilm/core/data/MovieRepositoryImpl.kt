@@ -7,9 +7,10 @@ import androidx.paging.map
 import com.viona.categoriesfilm.core.data.source.RemoteDataSource
 import com.viona.categoriesfilm.core.data.source.network.ApiResponse
 import com.viona.categoriesfilm.core.data.source.response.MovieResponseData
+import com.viona.categoriesfilm.core.data.source.response.ReviewResponse
 import com.viona.categoriesfilm.core.data.source.response.VideoStreamsResponse
-import com.viona.categoriesfilm.core.data.source.response.VideoStreamsResponseItem
 import com.viona.categoriesfilm.core.domain.model.Movie
+import com.viona.categoriesfilm.core.domain.model.ReviewItem
 import com.viona.categoriesfilm.core.domain.model.VideoStream
 import com.viona.categoriesfilm.core.domain.model.type.MovieType
 import com.viona.categoriesfilm.core.domain.repository.MovieRepository
@@ -87,6 +88,18 @@ class MovieRepositoryImpl @Inject constructor(
 
             override suspend fun createCall(): Flow<ApiResponse<VideoStreamsResponse>> {
                 return remoteDataSource.getVideoMovie(id)
+            }
+
+        }.asFlow()
+
+    override fun getReviewMovie(id: Int): Flow<Resource<List<ReviewItem>>> =
+        object : NetworkBoundResponse<List<ReviewItem>, ReviewResponse>() {
+            override suspend fun mapApiResponseToResult(responseData: ReviewResponse): List<ReviewItem> {
+                return DataMapper.mapReviewResponseToDomain(responseData)
+            }
+
+            override suspend fun createCall(): Flow<ApiResponse<ReviewResponse>> {
+                return remoteDataSource.getReviewMovie(id)
             }
 
         }.asFlow()

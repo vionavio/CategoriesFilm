@@ -2,8 +2,8 @@ package com.viona.categoriesfilm.core.data.source.network
 
 import com.viona.categoriesfilm.core.data.source.response.MovieResponse
 import com.viona.categoriesfilm.core.data.source.response.MovieResponseData
+import com.viona.categoriesfilm.core.data.source.response.ReviewResponse
 import com.viona.categoriesfilm.core.data.source.response.VideoStreamsResponse
-import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -25,6 +25,11 @@ interface ApiService {
     suspend fun getVideoStreams(
         @Path("movie_id") movieId: Long,
     ): VideoStreamsResponse
+
+    @GET("movie/{movie_id}/reviews")
+    suspend fun getReviewMovie(
+        @Path("movie_id") movieId: Int,
+    ): ReviewResponse
 
 
 

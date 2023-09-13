@@ -16,6 +16,7 @@ import com.viona.categoriesfilm.R
 import com.viona.categoriesfilm.core.domain.model.Movie
 import com.viona.categoriesfilm.core.domain.model.VideoStream
 import com.viona.categoriesfilm.databinding.FragmentDetailBinding
+import com.viona.categoriesfilm.ui.detail.adapter.ReviewAdapter
 import com.viona.categoriesfilm.ui.detail.adapter.ThumbnailAdapter
 import com.viona.categoriesfilm.util.Constants
 import com.viona.categoriesfilm.util.Constants.MAX_RATING
@@ -40,6 +41,7 @@ class DetailFragment : Fragment() {
     private val idMovie by lazy { arguments?.getInt(Constants.EXTRA_ID) ?: 0 }
 
     private val videoAdapter = ThumbnailAdapter()
+    private val reviewAdapter = ReviewAdapter()
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -69,6 +71,7 @@ class DetailFragment : Fragment() {
     private fun initData(){
         viewModel.getDetailMovie(idMovie)
         viewModel.getVideoMovie(idMovie.toLong())
+        viewModel.getReviewMovie(idMovie)
         viewModel.dataMovie.observableData(this) { result ->
             if (result != null) setupDataMovie(result)
         }
@@ -86,9 +89,22 @@ class DetailFragment : Fragment() {
         viewModel.videoMovieList.observableData(this) { result ->
             videoAdapter.submitData(result)
         }
+        viewModel.reviewMovie.observableData(this) { result ->
+            if (result.isNotEmpty()) {reviewAdapter.submitData(result)}
+            else {
+                binding.llReview.visibility = View.GONE
+            }
+        }
     }
-    private fun initView(){
-
+    private fun initView() = with(binding){
+        rvVideo.apply {
+            layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+            adapter = videoAdapter
+        }
+        rvReview.apply {
+            layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+            adapter = reviewAdapter
+        }
     }
 
     @SuppressLint("StringFormatMatches")
@@ -115,10 +131,6 @@ class DetailFragment : Fragment() {
                     }
                 }
             )
-            rvVideo.apply {
-                layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-                adapter = videoAdapter
-            }
         }
     }
 }

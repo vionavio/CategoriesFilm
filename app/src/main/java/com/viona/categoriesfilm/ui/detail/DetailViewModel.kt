@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.viona.categoriesfilm.core.data.Resource
 import com.viona.categoriesfilm.core.domain.model.Movie
+import com.viona.categoriesfilm.core.domain.model.ReviewItem
 import com.viona.categoriesfilm.core.domain.model.VideoStream
 import com.viona.categoriesfilm.core.domain.usecase.MovieUseCase
 import com.viona.categoriesfilm.util.Constants.SITE_KEY
@@ -23,6 +24,9 @@ class DetailViewModel(
 
     private val _videoMovieList: MutableLiveData<List<VideoStream>> = MutableLiveData()
     val videoMovieList: LiveData<List<VideoStream>> get() = _videoMovieList
+
+    private val _reviewMovie: MutableLiveData<List<ReviewItem>> = MutableLiveData()
+    val reviewMovie: LiveData<List<ReviewItem>> get() = _reviewMovie
 
     fun getDetailMovie(id: Int) = viewModelScope.launch {
         movieUseCase.getDetailMovie(id).collect {resource ->
@@ -47,6 +51,17 @@ class DetailViewModel(
                     }
                     _videoMovieList.value = resource.data.orEmpty()
                     _videoMovie.value = trailer
+                }
+                is Resource.Error -> {}
+                else -> {}
+            }
+        }
+    }
+    fun getReviewMovie(id: Int) = viewModelScope.launch {
+        movieUseCase.getReviewMovie(id).collect { resource ->
+            when (resource) {
+                is Resource.Success -> {
+                    _reviewMovie.value = resource.data.orEmpty()
                 }
                 is Resource.Error -> {}
                 else -> {}
