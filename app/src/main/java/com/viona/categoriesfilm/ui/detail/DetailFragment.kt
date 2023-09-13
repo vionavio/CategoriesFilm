@@ -7,6 +7,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -27,6 +29,7 @@ import com.viona.categoriesfilm.util.loadWithGlide
 import com.viona.categoriesfilm.util.movieLanguage
 import com.viona.categoriesfilm.util.movieEpisode
 import com.viona.categoriesfilm.util.observableData
+import com.viona.categoriesfilm.util.setUpToolbar
 import javax.inject.Inject
 
 class DetailFragment : Fragment() {
@@ -40,6 +43,7 @@ class DetailFragment : Fragment() {
     private val viewModel: DetailViewModel by viewModels { factory }
 
     private val idMovie by lazy { arguments?.getInt(Constants.EXTRA_ID) ?: 0 }
+    private val titleMovie by lazy { arguments?.getString(Constants.EXTRA_TITLE).orEmpty() }
 
     private val videoAdapter = ThumbnailAdapter()
     private val reviewAdapter = ReviewAdapter()
@@ -96,8 +100,12 @@ class DetailFragment : Fragment() {
                 binding.llReview.visibility = View.GONE
             }
         }
+        viewModel.errorMessage.observableData(this) { message ->
+            Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+        }
     }
     private fun initView() = with(binding){
+        toolbar.setUpToolbar(activity as AppCompatActivity, titleMovie, tvToolbar)
         rvVideo.apply {
             layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
             adapter = videoAdapter
@@ -122,6 +130,7 @@ class DetailFragment : Fragment() {
         tvShowAll.setOnClickListener {
             val bundle = Bundle().apply {
                 putInt(Constants.EXTRA_ID, movie.id)
+                putString(Constants.EXTRA_TITLE, movie.title)
             }
             it.findNavController().navigate(R.id.action_detailFragment_to_reviewFragment, bundle)
         }

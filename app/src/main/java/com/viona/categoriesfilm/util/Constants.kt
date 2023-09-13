@@ -6,7 +6,8 @@ object Constants {
     private const val BASE_YT_IMG_URL = "https://img.youtube.com/vi/"
     private const val BASE_PROFILE_URL = "https://image.tmdb.org/t/p/w185"
     const val EXTRA_TYPE = "type_movies"
-    const val EXTRA_ID = "id_movies"
+    const val EXTRA_ID = "id_movie"
+    const val EXTRA_TITLE = "title_movie"
     const val SITE_KEY = "YouTube"
     const val TYPE_KEY = "Trailer"
 

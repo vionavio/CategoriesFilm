@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.viona.categoriesfilm.MyApplication
@@ -13,6 +14,7 @@ import com.viona.categoriesfilm.ui.review.adapter.ReviewAdapter
 import com.viona.categoriesfilm.util.Constants
 import com.viona.categoriesfilm.util.ViewModelFactory
 import com.viona.categoriesfilm.util.observableData
+import com.viona.categoriesfilm.util.setUpToolbar
 import javax.inject.Inject
 
 
@@ -28,6 +30,7 @@ class ReviewFragment : Fragment() {
     private lateinit var reviewAdapter: ReviewAdapter
 
     private val idMovie by lazy { arguments?.getInt(Constants.EXTRA_ID) ?: 0 }
+    private val titleMovie by lazy { arguments?.getString(Constants.EXTRA_TITLE).orEmpty() }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -54,7 +57,10 @@ class ReviewFragment : Fragment() {
 
     private fun initView(){
         reviewAdapter = ReviewAdapter()
-        binding.rvReview.adapter = reviewAdapter
+        binding.apply {
+            rvReview.adapter = reviewAdapter
+            toolbar.setUpToolbar(activity as AppCompatActivity, titleMovie + "Reviews", tvToolbar)
+        }
 
     }
 

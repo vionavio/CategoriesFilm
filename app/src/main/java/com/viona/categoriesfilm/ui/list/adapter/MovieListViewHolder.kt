@@ -19,6 +19,7 @@ class MovieListViewHolder(
             ivPoster.setOnClickListener {
                 val bundle = Bundle().apply {
                     putInt(Constants.EXTRA_ID, movie.id)
+                    putString(Constants.EXTRA_TITLE, movie.title)
                 }
                 it.findNavController().navigate(R.id.action_moviesFragment_to_detailFragment, bundle)
             }

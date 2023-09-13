@@ -18,8 +18,9 @@ class ReviewViewHolder(
             tvUsername.text = review.author
             tvContent.text = review.content
             tvName.text = review.authorDetails?.name
-            if (review.authorDetails?.rating.toString().isNullOrEmpty()) return
-            ratingBar.rating = 5 * ((review.authorDetails?.rating.toString().toFloat() / Constants.MAX_RATING))
+            if (!review.authorDetails?.rating.toString().isNullOrEmpty()) {
+                ratingBar.rating = 5 * ((review.authorDetails?.rating.toString().toFloat() / Constants.MAX_RATING))
+            }
         }
     }
 }

@@ -29,6 +29,5 @@
         android:ellipsize="end"
         android:lines="2"
         android:paddingTop="5dp"
-        android:text="@{movie.title}"
         android:textSize="12sp" />
 </LinearLayout>

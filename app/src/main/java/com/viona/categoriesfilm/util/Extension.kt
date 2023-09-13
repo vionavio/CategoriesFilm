@@ -3,6 +3,8 @@ package com.viona.categoriesfilm.util
 import android.annotation.SuppressLint
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import com.bumptech.glide.Glide
@@ -38,6 +40,14 @@ fun ImageView.loadWithGlideCircle(url: String) {
         .circleCrop()
         .placeholder(R.drawable.ic_loading_circle)
         .error(R.drawable.ic_person)
+        .apply(RequestOptions.downsampleOf(DownsampleStrategy.AT_MOST))
+        .into(this)
+}
+
+fun ImageView.loadWithGlideUniversal(url: String) {
+    Glide.with(this)
+        .load(url)
+        .error(R.drawable.ic_broken_image)
         .apply(RequestOptions.downsampleOf(DownsampleStrategy.AT_MOST))
         .into(this)
 }
@@ -81,4 +91,19 @@ fun TextView.genresText(genres: List<Genre>?) {
         text = text + genres[i].name + appendText
     }
     this.text = text.dropLast(appendText.length)
+}
+
+fun Toolbar.setUpToolbar(
+    activity: AppCompatActivity,
+    title: String,
+    text: TextView
+) {
+    text.text = title
+    activity.setSupportActionBar(this)
+    activity.supportActionBar?.setDisplayShowTitleEnabled(false)
+    activity.supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+    setNavigationIcon(R.drawable.ic_back)
+    setNavigationOnClickListener { activity.onBackPressed() }
+
 }

@@ -28,6 +28,9 @@ class DetailViewModel(
     private val _reviewMovie: MutableLiveData<List<ReviewItem>> = MutableLiveData()
     val reviewMovie: LiveData<List<ReviewItem>> get() = _reviewMovie
 
+    private val _errorMessage: MutableLiveData<String> = MutableLiveData()
+    val errorMessage: LiveData<String> get() = _errorMessage
+
     fun getDetailMovie(id: Int) = viewModelScope.launch {
         movieUseCase.getDetailMovie(id).collect {resource ->
             when (resource) {
@@ -35,6 +38,7 @@ class DetailViewModel(
                     _dataMovie.value = resource.data!!
                 }
                 is Resource.Error -> {
+                    _errorMessage.value = resource.message.orEmpty()
                 }
                 else -> {}
             }
@@ -52,7 +56,9 @@ class DetailViewModel(
                     _videoMovieList.value = resource.data.orEmpty()
                     _videoMovie.value = trailer
                 }
-                is Resource.Error -> {}
+                is Resource.Error -> {
+                    _errorMessage.value = resource.message.orEmpty()
+                }
                 else -> {}
             }
         }
@@ -63,7 +69,9 @@ class DetailViewModel(
                 is Resource.Success -> {
                     _reviewMovie.value = resource.data.orEmpty()
                 }
-                is Resource.Error -> {}
+                is Resource.Error -> {
+                    _errorMessage.value = resource.message.orEmpty()
+                }
                 else -> {}
             }
         }

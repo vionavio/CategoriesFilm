@@ -4,14 +4,39 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginBottom="?attr/actionBarSize">
+    android:layout_marginBottom="@dimen/spacing_20">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="@dimen/spacing_0"
+        android:layout_height="?attr/actionBarSize"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/tv_toolbar"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center"
+            android:textAllCaps="true"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            tools:text="Movie" />
+    </androidx.appcompat.widget.Toolbar>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/moviesRecyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:id="@+id/rv_movie"
+        android:layout_width="@dimen/spacing_0"
+        android:layout_height="@dimen/spacing_0"
         android:orientation="vertical"
-        android:paddingTop="8dp"
+        android:paddingTop="@dimen/spacing_8"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:spanCount="3"
         tools:listitem="@layout/item_movie_grid" />
@@ -22,11 +47,11 @@
         android:layout_width="@dimen/spacing_4"
         android:layout_height="@dimen/spacing_4"
         android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@id/moviesRecyclerView"
-        app:layout_constraintEnd_toEndOf="@id/moviesRecyclerView"
+        app:layout_constraintBottom_toBottomOf="@id/rv_movie"
+        app:layout_constraintEnd_toEndOf="@id/rv_movie"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="@id/moviesRecyclerView"
-        app:layout_constraintTop_toTopOf="@id/moviesRecyclerView"
+        app:layout_constraintStart_toStartOf="@id/rv_movie"
+        app:layout_constraintTop_toTopOf="@id/rv_movie"
         tools:visibility="visible" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

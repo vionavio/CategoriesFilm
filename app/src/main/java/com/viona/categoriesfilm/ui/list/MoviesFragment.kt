@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import com.viona.categoriesfilm.MyApplication
 import com.viona.categoriesfilm.core.domain.model.type.MovieType
@@ -14,6 +15,7 @@ import com.viona.categoriesfilm.ui.list.adapter.MovieListAdapter
 import com.viona.categoriesfilm.util.Constants
 import com.viona.categoriesfilm.util.ViewModelFactory
 import com.viona.categoriesfilm.util.observableData
+import com.viona.categoriesfilm.util.setUpToolbar
 import javax.inject.Inject
 
 
@@ -22,6 +24,7 @@ class MoviesFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val type by lazy { arguments?.getString(Constants.EXTRA_TYPE).orEmpty() }
+
     @Inject
     lateinit var factory: ViewModelFactory
 
@@ -53,11 +56,15 @@ class MoviesFragment : Fragment() {
         _binding = null
     }
 
-    private fun initView(){
+    private fun initView() {
         movieAdapter = MovieListAdapter()
-        binding.moviesRecyclerView.adapter = movieAdapter
+        binding.apply {
+            rvMovie.adapter = movieAdapter
+            toolbar.setUpToolbar(activity as AppCompatActivity, type, tvToolbar)
+        }
 
     }
+
     private fun initData() {
         val typeMovie = MovieType.getTypeByString(type)
         viewModel.getMoviePaging(typeMovie).observableData(viewLifecycleOwner) { pagingData ->

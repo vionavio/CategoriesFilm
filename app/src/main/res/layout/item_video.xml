@@ -17,8 +17,8 @@
 
     <ImageView
         android:id="@+id/iv_play"
-        android:layout_width="@dimen/spacing_20"
-        android:layout_height="@dimen/spacing_20"
+        android:layout_width="@dimen/spacing_48"
+        android:layout_height="@dimen/spacing_48"
         android:backgroundTint="@android:color/transparent"
         android:contentDescription="@null"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -22,13 +22,21 @@ class HomeViewModel(
     private val _theatreMovie: MutableLiveData<List<Movie>> = MutableLiveData()
     val theatreMovie: LiveData<List<Movie>> get() = _theatreMovie
 
+    private val _highlightMovie: MutableLiveData<Movie> = MutableLiveData()
+    val highlightMovie: LiveData<Movie> get() = _highlightMovie
+
+    private val _errorMessage: MutableLiveData<String> = MutableLiveData()
+    val errorMessage: LiveData<String> get() = _errorMessage
+
     fun getPopularMovie() = viewModelScope.launch {
         movieUseCase.getPopularMovie().collect{ resource ->
             when (resource) {
                 is Resource.Success -> {
                     _popularMovie.value = resource.data.orEmpty()
+                    _highlightMovie.value = resource.data?.firstOrNull()
                 }
                 is Resource.Error -> {
+                    _errorMessage.value = resource.message.orEmpty()
                 }
                 else -> {}
             }
@@ -43,6 +51,7 @@ class HomeViewModel(
                     _upcomingMovie.value = resource.data.orEmpty()
                 }
                 is Resource.Error -> {
+                    _errorMessage.value = resource.message.orEmpty()
                 }
                 else -> {}
             }
@@ -57,6 +66,7 @@ class HomeViewModel(
                     _theatreMovie.value = resource.data.orEmpty()
                 }
                 is Resource.Error -> {
+                    _errorMessage.value = resource.message.orEmpty()
                 }
                 else -> {}
             }

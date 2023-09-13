@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginBottom="?attr/actionBarSize">
+    android:layout_marginBottom="@dimen/spacing_20">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cl_movie_layout"
@@ -15,11 +15,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ImageButton
-            android:id="@+id/ib_movie"
+        <ImageView
+            android:id="@+id/iv_movie"
             android:layout_width="@dimen/spacing_0"
             android:layout_height="@dimen/spacing_0"
             android:background="@null"
+            android:scaleType="centerCrop"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -33,18 +34,18 @@
             android:layout_width="@dimen/spacing_4"
             android:layout_height="@dimen/spacing_4"
             android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="@id/ib_movie"
-            app:layout_constraintEnd_toEndOf="@id/ib_movie"
+            app:layout_constraintBottom_toBottomOf="@id/iv_movie"
+            app:layout_constraintEnd_toEndOf="@id/iv_movie"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="@id/ib_movie"
-            app:layout_constraintTop_toTopOf="@id/ib_movie"
+            app:layout_constraintStart_toStartOf="@id/iv_movie"
+            app:layout_constraintTop_toTopOf="@id/iv_movie"
             tools:visibility="visible" />
 
         <View
             android:id="@+id/v_fade"
             android:layout_width="match_parent"
             android:layout_height="120dp"
-            app:layout_constraintBottom_toBottomOf="@id/ib_movie" />
+            app:layout_constraintBottom_toBottomOf="@id/iv_movie" />
 
         <TextView
             android:id="@+id/tv_movie"
@@ -54,7 +55,8 @@
             android:layout_marginEnd="@dimen/spacing_8"
             android:ellipsize="end"
             android:maxLines="2"
-            android:textSize="46sp"
+            android:textColor="@color/white"
+            android:textSize="30sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -95,38 +97,6 @@
             app:layout_constraintTop_toTopOf="@id/rb_rating"
             tools:text="189 votes" />
 
-        <TextView
-            android:id="@+id/tv_genre"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:minWidth="100dp"
-            android:paddingHorizontal="@dimen/spacing_16"
-            android:paddingVertical="@dimen/spacing_4"
-            android:textAlignment="center"
-            android:textAllCaps="true"
-            android:textSize="12sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/rb_rating"
-            tools:text="Thriller"
-            tools:visibility="visible" />
-
-        <TextView
-            android:id="@+id/tv_genre_movie"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/spacing_8"
-            android:layout_marginTop="@dimen/spacing_16"
-            android:minWidth="100dp"
-            android:paddingHorizontal="@dimen/spacing_16"
-            android:paddingVertical="@dimen/spacing_4"
-            android:textAlignment="center"
-            android:textAllCaps="true"
-            android:textSize="12sp"
-            app:layout_constraintLeft_toRightOf="@id/tv_genre"
-            app:layout_constraintTop_toBottomOf="@id/rb_rating"
-            tools:text="War"
-            tools:visibility="visible" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout

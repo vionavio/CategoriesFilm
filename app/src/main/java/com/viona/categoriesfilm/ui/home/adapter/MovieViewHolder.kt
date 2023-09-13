@@ -8,6 +8,7 @@ import com.viona.categoriesfilm.core.domain.model.Movie
 import com.viona.categoriesfilm.databinding.ItemMovieBinding
 import com.viona.categoriesfilm.util.Constants
 import com.viona.categoriesfilm.util.Constants.EXTRA_ID
+import com.viona.categoriesfilm.util.Constants.EXTRA_TITLE
 import com.viona.categoriesfilm.util.loadWithGlide
 
 class MovieViewHolder(
@@ -20,6 +21,7 @@ class MovieViewHolder(
             clContainer.setOnClickListener {
                 val bundle = Bundle().apply {
                     putInt(EXTRA_ID, movie.id)
+                    putString(EXTRA_TITLE, movie.title)
                 }
                 it.findNavController().navigate(R.id.action_homeFragment_to_detailFragment, bundle)
             }
