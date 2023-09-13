@@ -23,8 +23,8 @@ data class ReviewItem(
 )
 
 data class AuthorDetails(
-	val avatarPath: String? = null,
-	val name: String? = null,
-	val rating: Any? = null,
-	val username: String? = null
+	val avatarPath: String? = "",
+	val name: String? = "",
+	val rating: Any? = "",
+	val username: String? = ""
 )

@@ -7,6 +7,7 @@ import com.viona.categoriesfilm.di.AppScope
 import com.viona.categoriesfilm.ui.detail.DetailViewModel
 import com.viona.categoriesfilm.ui.home.HomeViewModel
 import com.viona.categoriesfilm.ui.list.MoviesViewModel
+import com.viona.categoriesfilm.ui.review.ReviewViewModel
 import javax.inject.Inject
 
 @AppScope
@@ -25,6 +26,9 @@ class ViewModelFactory @Inject constructor(
             }
             modelClass.isAssignableFrom(DetailViewModel::class.java) -> {
                 DetailViewModel(movieUseCase) as T
+            }
+            modelClass.isAssignableFrom(ReviewViewModel::class.java) -> {
+                ReviewViewModel(movieUseCase) as T
             }
             else -> throw Throwable("Unknown ViewModel class: " + modelClass.name)
         }

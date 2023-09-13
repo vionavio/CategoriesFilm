@@ -104,4 +104,14 @@ class MovieRepositoryImpl @Inject constructor(
 
         }.asFlow()
 
+    override fun getReviewMoviePaging(id: Int): Flow<PagingData<ReviewItem>> {
+        val pagingSourceFactory = { ReviewPagingSource(id, remoteDataSource) }
+
+        return Pager(
+            config = PagingConfig(pageSize = 20, enablePlaceholders = false),
+            pagingSourceFactory = pagingSourceFactory
+        ).flow.map { pagingData ->
+            pagingData.map { it }
+        }
+    }
 }

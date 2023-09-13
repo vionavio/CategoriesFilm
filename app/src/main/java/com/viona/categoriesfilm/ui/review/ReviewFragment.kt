@@ -1,44 +1,43 @@
-package com.viona.categoriesfilm.ui.list
+package com.viona.categoriesfilm.ui.review
 
 import android.content.Context
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.viona.categoriesfilm.MyApplication
-import com.viona.categoriesfilm.core.domain.model.type.MovieType
-import com.viona.categoriesfilm.databinding.FragmentMoviesBinding
-import com.viona.categoriesfilm.ui.list.adapter.MovieListAdapter
+import com.viona.categoriesfilm.databinding.FragmentReviewBinding
+import com.viona.categoriesfilm.ui.review.adapter.ReviewAdapter
 import com.viona.categoriesfilm.util.Constants
 import com.viona.categoriesfilm.util.ViewModelFactory
 import com.viona.categoriesfilm.util.observableData
 import javax.inject.Inject
 
 
-class MoviesFragment : Fragment() {
-    private var _binding: FragmentMoviesBinding? = null
+class ReviewFragment : Fragment() {
+    private var _binding : FragmentReviewBinding? = null
     private val binding get() = _binding!!
 
-    private val type by lazy { arguments?.getString(Constants.EXTRA_TYPE).orEmpty() }
     @Inject
     lateinit var factory: ViewModelFactory
 
-    private val viewModel: MoviesViewModel by viewModels { factory }
+    private val viewModel: ReviewViewModel by viewModels { factory }
 
-    private lateinit var movieAdapter: MovieListAdapter
+    private lateinit var reviewAdapter: ReviewAdapter
+
+    private val idMovie by lazy { arguments?.getInt(Constants.EXTRA_ID) ?: 0 }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         (requireActivity().application as MyApplication).appComponent.inject(this)
     }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentMoviesBinding.inflate(inflater, container, false)
+        _binding = FragmentReviewBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -54,15 +53,14 @@ class MoviesFragment : Fragment() {
     }
 
     private fun initView(){
-        movieAdapter = MovieListAdapter()
-        binding.moviesRecyclerView.adapter = movieAdapter
+        reviewAdapter = ReviewAdapter()
+        binding.rvReview.adapter = reviewAdapter
 
     }
+
     private fun initData() {
-        val typeMovie = MovieType.getTypeByString(type)
-        viewModel.getMoviePaging(typeMovie).observableData(viewLifecycleOwner) { pagingData ->
-            movieAdapter.submitData(viewLifecycleOwner.lifecycle, pagingData)
+        viewModel.getReviewPaging(idMovie).observableData(viewLifecycleOwner) { pagingData ->
+            reviewAdapter.submitData(viewLifecycleOwner.lifecycle, pagingData)
         }
     }
-
 }

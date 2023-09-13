@@ -4,6 +4,7 @@ import android.util.Log
 import com.viona.categoriesfilm.core.data.source.network.ApiResponse
 import com.viona.categoriesfilm.core.data.source.network.ApiService
 import com.viona.categoriesfilm.core.data.source.response.MovieResponseData
+import com.viona.categoriesfilm.core.data.source.response.ResultsItemResponseData
 import com.viona.categoriesfilm.core.data.source.response.ReviewResponse
 import com.viona.categoriesfilm.core.data.source.response.VideoStreamsResponse
 import com.viona.categoriesfilm.core.data.source.response.VideoStreamsResponseItem
@@ -112,11 +113,27 @@ class RemoteDataSource @Inject constructor(private val apiService: ApiService) {
     suspend fun getReviewMovie(id: Int): Flow<ApiResponse<ReviewResponse>> {
         return flow {
             try {
-                val response = apiService.getReviewMovie(id)
+                val response = apiService.getReviewMovie(id, 1)
                 emit(ApiResponse.Success(response))
             } catch (e: Exception) {
                 emit(ApiResponse.Error(e.toString()))
             }
         }.flowOn(Dispatchers.IO)
+    }
+
+    suspend fun getReviewMoviePaging(
+        id: Int,
+        page: Int
+    ): ApiResponse<List<ResultsItemResponseData>> {
+        try {
+            val response = apiService.getReviewMovie(id, page)
+            val data = response.results
+            if (data != null) {
+                return ApiResponse.Success(data)
+            }
+            return ApiResponse.Error("Failed to fetch popular movies")
+        } catch (e: Exception) {
+            return ApiResponse.Error("An error occurred: ${e.message}")
+        }
     }
 }

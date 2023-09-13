@@ -10,7 +10,6 @@ import com.viona.categoriesfilm.core.domain.model.type.MovieType
 import com.viona.categoriesfilm.core.domain.repository.MovieRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.mapLatest
 import javax.inject.Inject
 
@@ -46,6 +45,13 @@ class MovieUseCaseImpl @Inject constructor(
 
     override fun getReviewMovie(id: Int): Flow<Resource<List<ReviewItem>>> {
         return movieRepository.getReviewMovie(id)
+    }
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    override fun getReviewMoviePaging(id: Int): Flow<PagingData<ReviewItem>> {
+        return movieRepository.getReviewMoviePaging(id).mapLatest { pagingData ->
+            pagingData.map { it }
+        }
     }
 
 }

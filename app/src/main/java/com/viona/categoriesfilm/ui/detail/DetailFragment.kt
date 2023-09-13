@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
@@ -118,8 +119,12 @@ class DetailFragment : Fragment() {
         seasonText.movieEpisode(movie.runtime)
         airDateText.movieLanguage(movie.originalLanguage)
         overviewText.text = movie.overview
-
-
+        tvShowAll.setOnClickListener {
+            val bundle = Bundle().apply {
+                putInt(Constants.EXTRA_ID, movie.id)
+            }
+            it.findNavController().navigate(R.id.action_detailFragment_to_reviewFragment, bundle)
+        }
     }
 
     private fun setupYoutubePlayer(result: VideoStream){
