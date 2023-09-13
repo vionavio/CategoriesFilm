@@ -1,7 +1,5 @@
 package com.viona.categoriesfilm.core.domain.model
 
-import com.google.gson.annotations.SerializedName
-
 data class Movie(
     val id: Int,
 
@@ -23,4 +21,6 @@ data class Movie(
 
     val runtime: Int?,
 
-    val overview: String?)
+    val overview: String?,
+
+    val genres: List<Genre>?)

@@ -23,6 +23,7 @@ dagger = "2.48"
 kotlinCoroutines = "1.7.3"
 glide = "4.15.1"
 paging = "3.2.1"
+android_youtube_player_version = "12.0.0"
 
 [libraries]
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
@@ -50,6 +51,7 @@ kotlinCoroutinesAndroid = { group = "org.jetbrains.kotlinx", name = "kotlinx-cor
 kotlinCoroutinesTest = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "kotlinCoroutines" }
 glide = { group = "com.github.bumptech.glide", name = "glide", version.ref = "glide" }
 paging = { group = "androidx.paging", name = "paging-runtime", version.ref = "paging" }
+android_youtube_player = { group = "com.pierfrancescosoffritti.androidyoutubeplayer", name = "core", version.ref = "android_youtube_player_version" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

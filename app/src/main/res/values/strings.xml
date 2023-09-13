@@ -6,4 +6,9 @@
     <string name="show_all">Show All</string>
     <string name="text_in_theaters">In Theaters</string>
     <string name="text_upcoming">Upcoming</string>
+    <string name="text_videos">Videos</string>
+    <string name="text_cast">Cast</string>
+    <string name="votes_count">votes %1$s</string>
+    <string name="text_video">Video</string>
+    <string name="text_review">Review</string>
 </resources>

@@ -72,6 +72,7 @@ dependencies {
     testImplementation(libs.archCoreTest)
     testImplementation(libs.kotlinCoroutinesTest)
     implementation(libs.paging)
+    implementation(libs.android.youtube.player)
 
     androidTestImplementation(libs.androidx.test.ext.junit)
     androidTestImplementation(libs.espresso.core)

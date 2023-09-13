@@ -7,7 +7,10 @@ import androidx.paging.map
 import com.viona.categoriesfilm.core.data.source.RemoteDataSource
 import com.viona.categoriesfilm.core.data.source.network.ApiResponse
 import com.viona.categoriesfilm.core.data.source.response.MovieResponseData
+import com.viona.categoriesfilm.core.data.source.response.VideoStreamsResponse
+import com.viona.categoriesfilm.core.data.source.response.VideoStreamsResponseItem
 import com.viona.categoriesfilm.core.domain.model.Movie
+import com.viona.categoriesfilm.core.domain.model.VideoStream
 import com.viona.categoriesfilm.core.domain.model.type.MovieType
 import com.viona.categoriesfilm.core.domain.repository.MovieRepository
 import com.viona.categoriesfilm.core.util.DataMapper
@@ -20,11 +23,11 @@ import javax.inject.Singleton
 @Singleton
 class MovieRepositoryImpl @Inject constructor(
     private val remoteDataSource: RemoteDataSource
-): MovieRepository {
+) : MovieRepository {
     override fun getPopularMovie(): Flow<Resource<List<Movie>>> =
         object : NetworkBoundResponse<List<Movie>, List<MovieResponseData>>() {
             override suspend fun mapApiResponseToResult(responseData: List<MovieResponseData>): List<Movie> {
-                return DataMapper.mapResponseToDomain(responseData)
+                return DataMapper.mapListResponseToDomain(responseData)
             }
 
             override suspend fun createCall(): Flow<ApiResponse<List<MovieResponseData>>> {
@@ -35,7 +38,7 @@ class MovieRepositoryImpl @Inject constructor(
     override fun getUpcomingMovie(): Flow<Resource<List<Movie>>> =
         object : NetworkBoundResponse<List<Movie>, List<MovieResponseData>>() {
             override suspend fun mapApiResponseToResult(responseData: List<MovieResponseData>): List<Movie> {
-                return DataMapper.mapResponseToDomain(responseData)
+                return DataMapper.mapListResponseToDomain(responseData)
             }
 
             override suspend fun createCall(): Flow<ApiResponse<List<MovieResponseData>>> {
@@ -46,7 +49,7 @@ class MovieRepositoryImpl @Inject constructor(
     override fun getTheatreMovie(): Flow<Resource<List<Movie>>> =
         object : NetworkBoundResponse<List<Movie>, List<MovieResponseData>>() {
             override suspend fun mapApiResponseToResult(responseData: List<MovieResponseData>): List<Movie> {
-                return DataMapper.mapResponseToDomain(responseData)
+                return DataMapper.mapListResponseToDomain(responseData)
             }
 
             override suspend fun createCall(): Flow<ApiResponse<List<MovieResponseData>>> {
@@ -64,5 +67,28 @@ class MovieRepositoryImpl @Inject constructor(
             pagingData.map { it }
         }
     }
+
+    override fun getDetailMovie(id: Int): Flow<Resource<Movie>> =
+        object : NetworkBoundResponse<Movie, MovieResponseData>() {
+            override suspend fun mapApiResponseToResult(responseData: MovieResponseData): Movie {
+                return DataMapper.mapResponseToDomain(responseData)
+            }
+
+            override suspend fun createCall(): Flow<ApiResponse<MovieResponseData>> {
+                return remoteDataSource.getDetailMovie(id)
+            }
+        }.asFlow()
+
+    override fun getVideoMovie(id: Long): Flow<Resource<List<VideoStream>>> =
+        object : NetworkBoundResponse<List<VideoStream>, VideoStreamsResponse>() {
+            override suspend fun mapApiResponseToResult(responseData: VideoStreamsResponse): List<VideoStream> {
+                return DataMapper.mapVideoResponseToDomain(responseData)
+            }
+
+            override suspend fun createCall(): Flow<ApiResponse<VideoStreamsResponse>> {
+                return remoteDataSource.getVideoMovie(id)
+            }
+
+        }.asFlow()
 
 }

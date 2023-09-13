@@ -36,7 +36,7 @@ data class MovieResponseData(
     @SerializedName("overview")
     var overview: String?,
 
-//    @SerializedName("genres")
-//    var genres: List<Genre>?
+    @SerializedName("genres")
+    var genres: List<GenreResponseData>?
 )
 

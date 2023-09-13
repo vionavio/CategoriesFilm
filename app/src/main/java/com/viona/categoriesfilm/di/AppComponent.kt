@@ -1,6 +1,7 @@
 package com.viona.categoriesfilm.di
 
 import com.viona.categoriesfilm.core.di.CoreComponent
+import com.viona.categoriesfilm.ui.detail.DetailFragment
 import com.viona.categoriesfilm.ui.home.HomeFragment
 import com.viona.categoriesfilm.ui.list.MoviesFragment
 import dagger.Component
@@ -18,4 +19,5 @@ interface AppComponent {
 
     fun inject(fragment: HomeFragment)
     fun inject(fragment: MoviesFragment)
+    fun inject(fragment: DetailFragment)
 }

@@ -4,6 +4,8 @@ import android.util.Log
 import com.viona.categoriesfilm.core.data.source.network.ApiResponse
 import com.viona.categoriesfilm.core.data.source.network.ApiService
 import com.viona.categoriesfilm.core.data.source.response.MovieResponseData
+import com.viona.categoriesfilm.core.data.source.response.VideoStreamsResponse
+import com.viona.categoriesfilm.core.data.source.response.VideoStreamsResponseItem
 import com.viona.categoriesfilm.core.domain.model.type.MovieType
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -82,5 +84,27 @@ class RemoteDataSource @Inject constructor(private val apiService: ApiService) {
         } catch (e: Exception) {
             return ApiResponse.Error("An error occurred: ${e.message}")
         }
+    }
+
+    suspend fun getDetailMovie(id: Int): Flow<ApiResponse<MovieResponseData>> {
+        return flow {
+            try {
+                val response = apiService.getDetailMovie(id)
+                emit(ApiResponse.Success(response))
+            } catch (e: Exception) {
+                emit(ApiResponse.Error(e.toString()))
+            }
+        }.flowOn(Dispatchers.IO)
+    }
+
+    suspend fun getVideoMovie(id: Long): Flow<ApiResponse<VideoStreamsResponse>> {
+        return flow {
+            try {
+                val response = apiService.getVideoStreams(id)
+                emit(ApiResponse.Success(response))
+            } catch (e: Exception) {
+                emit(ApiResponse.Error(e.toString()))
+            }
+        }.flowOn(Dispatchers.IO)
     }
 }

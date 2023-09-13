@@ -19,7 +19,7 @@ class MoviePagingSource @Inject constructor(
             when (val response = remoteDataSource.getMoviePaging(type, page)) {
                 is ApiResponse.Success -> {
                     val data = response.data
-                    val movies = DataMapper.mapResponseToDomain(data)
+                    val movies = DataMapper.mapListResponseToDomain(data)
 
                     val prevKey = if (page == 1) null else page - 1
                     val nextKey = if (movies.isNotEmpty()) page + 1 else null
