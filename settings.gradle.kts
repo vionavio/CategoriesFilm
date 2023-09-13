@@ -15,4 +15,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "CategoriesFilm"
 include(":app")
- 
+include(":core")

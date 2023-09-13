@@ -2,8 +2,6 @@
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.kotlinAndroid)
-    alias(libs.plugins.kotlinParcelable)
-    alias(libs.plugins.secretsGradlePlugin)
     kotlin("kapt") version "1.6.10"
 }
 
@@ -40,38 +38,28 @@ android {
     buildFeatures {
         viewBinding = true
     }
-    buildFeatures {
-        buildConfig = true
-    }
 }
 
 dependencies {
+    implementation(project(":core"))
 
     implementation(libs.core.ktx)
     implementation(libs.appcompat)
     implementation(libs.material)
-    implementation(libs.retrofit)
-    implementation(libs.retrofitConverter)
-    implementation(libs.gson)
-    implementation(libs.logging)
     implementation(libs.constraintlayout)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)
     androidTestImplementation(libs.espresso.core)
+    implementation(libs.dagger)
+    kapt(libs.daggerCompiler)
+    implementation(libs.paging)
 
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
-    implementation(libs.kotlinCoroutinesAndroid)
-    implementation(libs.lifecycle)
-    implementation(libs.lifecycleLiveData)
-    implementation(libs.dagger)
-    implementation(libs.kotlinCoroutines)
     implementation(libs.glide)
-    kapt(libs.daggerCompiler)
     testImplementation(libs.junit)
     testImplementation(libs.archCoreTest)
     testImplementation(libs.kotlinCoroutinesTest)
-    implementation(libs.paging)
     implementation(libs.android.youtube.player)
 
     androidTestImplementation(libs.androidx.test.ext.junit)

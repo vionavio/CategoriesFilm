@@ -16,10 +16,6 @@
         android:theme="@style/Theme.CategoriesFilm"
         tools:targetApi="31">
 
-        <meta-data
-            android:name="api_key"
-            android:value="${api_key}" />
-
         <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait"

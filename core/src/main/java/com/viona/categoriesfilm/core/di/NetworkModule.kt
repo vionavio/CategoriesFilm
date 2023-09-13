@@ -1,6 +1,6 @@
 package com.viona.categoriesfilm.core.di
 
-import com.viona.categoriesfilm.BuildConfig
+import com.viona.categoriesfilm.core.BuildConfig
 import com.viona.categoriesfilm.core.data.source.network.ApiService
 import com.viona.categoriesfilm.core.util.retrofit
 import dagger.Module
@@ -21,21 +21,6 @@ class NetworkModule {
                 "Bearer ${BuildConfig.api_key}"
             )
             .build()
-
-
-
-//        val modifiedRequest = request.newBuilder()
-//            .header("language", "en-US")  // Set the language in the request header
-//            .header("Authorization", "Bearer " + BuildConfig.api_key)  // Set the API token in the request header
-//            .build()
-//        chain.proceed(modifiedRequest)
-//        val requestApiKey = request.url.newBuilder()
-//            .addQueryParameter("language", "en-US")
-//            //.addQueryParameter("api_key", BuildConfig.api_key)
-//            .build()
-//        val newRequest = request.newBuilder()
-//            .url(requestApiKey)
-//            .build()
 
         chain.proceed(request)
 
